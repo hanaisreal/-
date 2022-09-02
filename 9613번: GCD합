@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.StringTokenizer;
+
+public class GCD합 {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int numTestCase = Integer.parseInt(br.readLine()); //줄 단위로 읽어옴
+        for(int i = 0; i < numTestCase; i++){
+
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int numCount = Integer.parseInt(st.nextToken()); //첫 숫자는 뒤에 오는 숫자의 개수를 알려준다
+            long[] numArray = new long[numCount]; //입력으로 주어지는 수에 주의!( < 1,000,000)
+
+            for(int j = 0; j < numCount; j++){
+                int num = Integer.parseInt(st.nextToken()); //다음 숫자를 불러온다.
+                numArray[j] = num;
+            }
+
+            bw.write(sumGCD(numArray) + "\n");
+        }
+
+        br.close();
+        bw.close();
+    }
+
+    public static long sumGCD(long[] arr){
+
+        long sum = 0;
+        for(int i = 0; i < arr.length; i++){
+            for(int j = i+1; j < arr.length;j++){
+                sum += gcd(arr[i], arr[j]);
+            }
+        }
+        return sum;
+
+    }
+
+    public static long gcd(long a, long b){  //유클리드 호제법
+
+        while(b > 0){
+            long tmp = a;
+            a = b;
+            b %= tmp;
+        }
+        return a;
+    }
+}
